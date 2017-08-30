@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    
+    <% include ../partials/stylesheet %>
+</head>
+<body>
+    <% include ../partials/header %>
+
+
+<div class="container searchBody">
+
+<!-- <form class="input-append" id="file-form" enctype="multipart/form-data" method="post"  action="/books">
+      <input type="text" name="title" placeholder= " " >
+     <input type="submit" value="Submit" id="submit" />
+ </form> -->
+
+
+<form action="/books" method="post">
+    <input type="text" name="title" placeholder= " " >
+   
+     <input type="submit" value="Submit" id="submit" />
+</form>
+
+
+<% if (search) { %>
+
+
+ <h4><%= title %></h4>
+ <p> <%= author %> </p>
+ <p> <%= description %> </p>
+ 
+
+
+  <img src=<%= thumbnail %>>
+ <a href="/books/<%= id %>" class="btn btn-large btn-success">Add this book! </a>
+<% } else { %>
+<p> You can find new book using input! </p>
+ 
+<% } %>
+
+</div>
+
+
+</div>
+
+    <% include ../partials/footer %>
+    <% include ../partials/javascript %>
+</body>
+</html>
