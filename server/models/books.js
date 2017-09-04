@@ -15,25 +15,16 @@ var bookSchema = mongoose.Schema({
         type: [String]
     },
 
-    bookid: {
-        type: String
-        
-    },
-
-
-    rating:  {
-        type: Number
-        
-    },
-
+       
     thumbnail:  {
         type: String
         
     },
 
-    owners: 
+    
+    description: 
     {
-        type: [String]
+        type: String
     },
 
     user: {

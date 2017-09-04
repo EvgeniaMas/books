@@ -1,0 +1,51 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title><%= title %></title>
+    <% include ../partials/stylesheet %>
+</head>
+<body>
+    <% include ../partials/header %>
+    <div class="container appName">
+        <div class="row">
+            <div class="col-lg-6">
+                <h4 class="text-muted">All books</h4>
+
+                       
+            </div>
+            <div class="col-lg-6">
+                                
+            </div>
+        </div>
+       
+
+
+ <hr>
+        <div class="row">
+            <% books.forEach(function(books){ %>
+                <div class="col-lg-4">
+                    <figure class="figure">
+                        <figcaption class="figure-caption"><p class= "search_preview"><%= books.author %></p></figcaption>
+                        <p class= "search_preview"><%= books.title %><p>                      
+                        <img class= "search_preview" src=<%= books.thumbnail %>                                     
+                      </figure>
+                     <a class="btn btn-success" href ="/letter/<%= books.id %>" aria-hidden="true">Send a message to a trader</a>
+                     
+                </div>
+            <% }); %>
+        </div>
+       
+
+
+
+       
+ </div>
+
+
+        <% include ../partials/footer %>
+        <% include ../partials/javascript %>
+        
+
+
+    </body>
+    </html>

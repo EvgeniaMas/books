@@ -16,8 +16,8 @@
  </form> -->
 
 
-<form action="/books" method="post">
-    <input type="text" name="title" placeholder= " " >
+<form action="/books"  class= "search_preview" method="post">
+    <input type="text" name="title" placeholder= " " required=>
    
      <input type="submit" value="Submit" id="submit" />
 </form>
@@ -25,17 +25,35 @@
 
 <% if (search) { %>
 
+<div class="col-lg-12">
+	<div class="row">
+	<div class="col-lg-5">
 
- <h4><%= title %></h4>
- <p> <%= author %> </p>
- <p> <%= description %> </p>
+ <h4 id ="book_title" class= "search_preview"><%= results.title %></h4>
+ <p id ="book_author" class= "search_preview"> <%= results.authors %> </p>
  
 
+<img id ="book_picture" class= "search_preview book_cover" src=<%= results.thumbnail %>>
 
-  <img src=<%= thumbnail %>>
- <a href="/books/<%= id %>" class="btn btn-large btn-success">Add this book! </a>
+</div>
+
+
+
+<div class="col-lg-7">
+<p id ="book_desc" class="search_preview"> <%= results.description %> </p>
+</div>
+</div>
+</div>
+<div class="col-lg-12">
+<button class= "btn btn-large btn-success" onclick="addBook()">Add this book! </button>
+<p class= "search_preview more_search"> Didn't find the book? <br> Try to make another search! </p>
+	
+</div>
+
+
 <% } else { %>
-<p> You can find new book using input! </p>
+<p class= "search_preview"> You can find new book using input! </p>
+<p class= "search_preview"> Enter author and title of the book, like this:Twain The Adventures of Tom Sawyer</p>
  
 <% } %>
 
@@ -46,5 +64,52 @@
 
     <% include ../partials/footer %>
     <% include ../partials/javascript %>
+
+<script>    
+ 	
+
+ 	function addBook() {
+  var title = document.getElementById('book_title').innerHTML;
+  var author = document.getElementById('book_author').innerHTML;
+  alert(author);
+  var thumbnail = document.getElementById('book_picture').src;
+  var description = document.getElementById('book_desc').innerHTML;
+ 	var body = 'title=' + encodeURIComponent(title) + '&author='+ encodeURIComponent(author) +
+  '&thumbnail=' + encodeURIComponent(thumbnail) + '&description=' + encodeURIComponent(description);
+  
+    // 1. Создаём новый объект XMLHttpRequest
+    var xhr = new XMLHttpRequest();
+
+    // 2. Конфигурируем его: POST-запрос на URL 
+    xhr.open('POST', '/books/add', true);
+    xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
+    // 3. Отсылаем запрос
+    xhr.send(body);
+
+    // 4. Если код ответа сервера не 200, то это ошибка
+    if (xhr.status != 200) {
+      // обработать ошибку
+      console.log( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+    } else {
+      // вывести результат
+      console.log( xhr.responseText ); // responseText -- текст ответа.
+    }
+      
+
+
+
+
+ 
+}
+
+
+
+
+
+</script>
+
+
+
+
 </body>
 </html>

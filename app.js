@@ -20,9 +20,9 @@ var auth = require('./server/controllers/auth');
 var comments = require('./server/controllers/comments');
 
 // Import images controller
-var images = require('./server/controllers/images');
+var all_books = require('./server/controllers/all_books');
 var books = require ('./server/controllers/books');
-
+var message = require('./server/controllers/message');
 // ODM With Mongoose
 var mongoose = require('mongoose');
 // Modules to store session
@@ -121,23 +121,26 @@ app.get('/logout', function(req, res) {
 });
 
 // Setup routes for comments
-app.get('/comments', comments.hasAuthorization, comments.list);
-app.post('/comments', comments.hasAuthorization, comments.create);
+// app.get('/comments', comments.hasAuthorization, comments.list);
+// app.post('/comments', comments.hasAuthorization, comments.create);
+
+app.get('/message/:id', message.hasAuthorization, message.list);
 
 
 // Setup routes for images
-app.post('/images', images.hasAuthorization, upload.single('image'), images.uploadImage);
-app.get('/images-gallery', images.hasAuthorization, images.show);
-app.get('/like/:id', images.update);
+app.post('/all_books', all_books.hasAuthorization, upload.single('all_books'), all_books.uploadImage);
+app.get('/all_books', all_books.hasAuthorization, all_books.show);
+app.get('/like/:id', all_books.update);
 app.get('/delete/:id', auth.delete);
 app.get('/comments/:id', comments.delete);
 
 app.get('/books',  books.hasAuthorization, books.list, books.create, books.delete);
 
 
-app.post('/books',  books.hasAuthorization, books.lookFor);
+app.post('/books',  books.hasAuthorization, books.lookFor, books.save);
+app.post('/books/add',  books.hasAuthorization, books.save);
 
-app.get('/books/:id',  books.hasAuthorization, books.addBook);
+// app.get('/books',  books.hasAuthorization, books.save);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

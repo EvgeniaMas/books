@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+letter<!DOCTYPE html>
 <html>
 <head>
     <title><%= title %></title>
@@ -25,31 +25,53 @@
                 </div>
             </div>
         </div>
-        <div class="col-lg-12">
-                <button type="button" class="btn btn-success pull-right" data-toggle="modal" >
-                    Image Upload
-                </button>
-                
-            </div>
-   <br>
-   <br>
-   <div class="row">
-            
+        
+
+    <div class="row">
             <% books.forEach(function(books){ %>
-           
+             <% if (user.id === books.user.id) { %> 
+                <div class="col-lg-4">
                     <figure class="figure">
+                                              
+                        <figcaption class="figure-caption"> <p class= "search_preview"><%= books.author %></p></figcaption>
+                        <figure class="figure">
+                        <p class= "search_preview"><%= books.title %></p>
+                       
+                        <img src=<%= books.thumbnail %>
+                        <hr>
+                         <a class="btn btn-danger" href ="/delete/<%= books.id %>" aria-hidden="true">Delete this book</a>
                         
-                        <h4><%= books.title %></h4>
-                        <p> <%= books.author %> </p>
-                        <p> <%= books.description %> </p>
-                        <img src=<%= books.thumbnail %>>
-                      
+                       
                     </figure>
                 </div>
-               
+             <% } %>
             <% }); %>
-         
-   </div>
+        </div>
+
+
+        <div class="row">
+        <% letter.forEach(function(letter){ %>
+            <% if (user.id === letter.recipient) { %> 
+                <div class="col-lg-12">
+                    <figure class="figure">
+                                              
+                        <p class= "search_preview"><%= letter.sender %></p>
+                         <p class= "search_preview"><%= letter.text %></p>
+                          <p class= "search_preview"><%= letter.sender_address %></p>                     
+                       
+                        <hr>
+                         
+                        
+                       
+                    </figure>
+                </div>
+             <% } %>
+            <% }); %>
+        </div>
+
+
+
+   
 
 
 </div>
