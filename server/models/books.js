@@ -27,6 +27,13 @@ var bookSchema = mongoose.Schema({
         type: String
     },
 
+    trade: {
+        sender: String,
+        letter_text: String,
+        recipient: String
+
+    },
+
     user: {
         type: Schema.ObjectId,
         ref: 'User'

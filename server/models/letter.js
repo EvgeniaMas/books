@@ -9,21 +9,21 @@ var letterSchema = mongoose.Schema({
     },
     sender: {
         type: String,
-        default: '',
+        default: 'Kuku',
         trim: true,
         required: 'Your name cannot be blank'
     },
     sender_address: {
         type: String,
-        default: '',
+        default: 'Piter',
         trim: true,
-        required: 'You adress cannot be blank'
+        required: 'You address cannot be blank'
     },
 
        
     text: {
         type: String,
-        default: '',
+        default: 'Tuta ya',
         trim: true
     },
 
@@ -32,12 +32,12 @@ var letterSchema = mongoose.Schema({
         type: String,
         default: '',
         trim: true
-    }
+    },
 
-    // user: {
-    //     type: Schema.ObjectId,
-    //     ref: 'User'
-    // }
+    user: {
+        type: Schema.ObjectId,
+        ref: 'User'
+    }
 });
 
 module.exports = mongoose.model('Letter', letterSchema);

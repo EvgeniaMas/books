@@ -7,6 +7,8 @@ var mime = require('mime');
 var gravatar = require('gravatar');
 var Letter = require('../models/letter');
 var Books = require('../models/books');
+var User = require('../models/users');
+var mongoose = require ('mongoose');
 // set image file types
 
 // Signin GET
@@ -23,16 +25,15 @@ exports.signup = function(req, res) {
 // Profile GET
 exports.profile = function(req, res) {
    
-Books.find().sort('-created').populate('user', 'letter').exec(function(error, books){
+Books.find().sort('-created').populate('user').exec(function(error, books){
             
     res.render('profile', { title: 'Your profile', 
-        books: books, 
+        books: books,         
         user : req.user, 
-        avatar: gravatar.url(req.user.email ,  {s: '100', r: 'x', d: 'identicon'}, true) });
-        letter: letter;
+        mistake: "",
+        avatar: gravatar.url(req.user.email ,  {s: '100', r: 'x', d: 'identicon'}, true) });       
        
-    })
-    
+    })    
 };
 
 exports.delete = function(req, res) {
@@ -43,7 +44,6 @@ Books.findByIdAndRemove(req.params.id, function(err){
         });
     
 };
-
 
 
 // Images authorization middleware
@@ -68,6 +68,65 @@ exports.isLoggedIn = function(req, res, next) {
         return next();
     res.redirect('/login');
 };
+
+
+
+exports.updates = function(req, res) {   
+    var name = req.body.name;
+    var email = req.body.email; 
+    var password = req.user.local.password;   
+    var id = req.user.id;   
+    User.findById(id, function (err, user) {
+    user.local = { name: name, email: email, password: password };
+    user.local.markModified; // nested object data before saving data
+    user.save(); 
+     // console.log("Обновленный объект", user);
+    res.redirect('/profile');
+})
+};
+
+
+exports.updatePassword = function(req, res, err) { 
+    var name = req.user.local.name;
+    var email = req.user.local.email;
+    console.log(email);
+    var currentPassword = req.user.local.password;  
+    var oldPassword = req.body.currentPassword;
+    var newPassword = req.body.newPassword;
+    var newPassword_check = req.body.newPassword_check;  
+    var id = req.user.id;   
+     if (oldPassword != currentPassword) {
+        throw err;
+     }
+     else if (newPassword != newPassword_check) {
+        throw err;
+     }
+
+     else { 
+
+    User.findById(id, function (err, user) {
+    user.local = { name: name, email: email, password: newPassword};
+    user.local.markModified;
+    user.save(); // works
+    // console.log("Обновленный объект", user);
+    res.redirect('/profile');
+})
+
+    }
+};
+
+
+exports.trade = function(req, res) { 
+
+    console.log("good");
+
+
+};
+
+
+
+
+
 
 
 

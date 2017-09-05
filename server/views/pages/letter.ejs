@@ -4,37 +4,36 @@
     <title><%= title %></title>
     <% include ../partials/stylesheet %>
 </head>
-<body>
+<body class="letter_book_page">
     <% include ../partials/header %>
-    <div class="container appName comments_padding">
+    <div class="container  comments_padding ">
+    <div class="col-lg-6 appName">
        
-                    <form action="/comments" method="post">
+                    <form action="/trade" method="post">
                         <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
-                                <span aria-hidden="true">&times;</span>
-                            </button>
-                            <h4 class="modal-title" id="myModalLabel">Write message</h4>
+                            
+                            <h4 class="modal-title" id="myModalLabel">Write message to buy a book!</h4>
                         </div>
 
                         <div class="modal-body">
 
                             <fieldset class="form-group">
-                                <label  for="inputitle">Title</label>
-                                <input type="text" id="inputitle" name="title" class="form-control" placeholder="Message theme" required=""> 
+                                <label  for="inputitle">Your name</label>
+                                <textarea id="inputContent" name="sender" rows="1" cols="1" class="form-control" placeholder="" required="">From: <%= user.local.name %>, email: <%= user.local.email %></textarea>
                                
                             </fieldset>
                             <fieldset class="form-group">
-                                <label  for="inputContent">Content</label>
-                                <textarea id="inputContent" name="content" rows="8" cols="40" class="form-control" placeholder="Comment Description" required=""></textarea>
+                                <label  for="inputContent">Text of your message and how the trader can quickly connect  with you! Write your phone or social-media, if you like. </label>
+                                <textarea id="inputContent" name="letter_text" rows="8" cols="30" class="form-control" placeholder="" required="">To bookowner - <%= recipient %></textarea>
                             </fieldset>
 
                         </div>
                         <div class="modal-footer">
-                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-                            <button type="submit" class="btn btn-primary">Save changes</button>
+                            
+                            <button type="submit" class="btn green_button">Send</button>
                         </div>
                     </form>
-                
+            </div>            
         </div>
 
 

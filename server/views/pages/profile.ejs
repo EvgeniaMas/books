@@ -4,74 +4,54 @@ letter<!DOCTYPE html>
     <title><%= title %></title>
     <% include ../partials/stylesheet %>
 </head>
-<body>
+<body class="profile_book_page">
     <% include ../partials/header %>
 
     <div class="container  appName">
-        <h1><%= title %></h1>
+        <h4><%= title %></h4>
         <div class="datails">
 
             <div class="card text-xs-center appName">
                 <br>
-                <!-- <img class="card-img-top" src="<%= avatar %>" alt="Card image cap"> -->
+                
                 <div class="card-block">
                    
                     <p class="card-text">
                         <strong>Name</strong>: <%= user.local.name %><br>
                         <strong>Email</strong>: <%= user.local.email %>
                     </p>
-                    <a href="/logout" class="btn btn-large btn-primary">Logout</a>
-                     <button class="btn btn-large btn-primary"  data-toggle="modal" data-target="#editProfile">Update your personal information</button>
+                    <a href="/logout" class="btn green_button ">Logout</a>
+                     <button class="btn green_button "  data-toggle="modal" data-target="#editProfile">Update your personal information</button>
+                     <button class="btn green_button "  data-toggle="modal" data-target="#editPassword">Update your password</button>
                 </div>
             </div>
         </div>
-        
 
+       
     <div class="row">
+
             <% books.forEach(function(books){ %>
              <% if (user.id === books.user.id) { %> 
-                <div class="col-lg-4">
-                    <figure class="figure">
-                                              
-                        <figcaption class="figure-caption"> <p class= "search_preview"><%= books.author %></p></figcaption>
-                        <figure class="figure">
+                <div class="col-lg-3">
+                <a class="btn red_button button_margin" href ="/delete/<%= books.id %>" aria-hidden="true">Delete</a>
+                    <figure class="figure">                                              
+                        <p class= "search_preview"><%= books.author %></p>
                         <p class= "search_preview"><%= books.title %></p>
-                       
+                      </figure>  
                         <img src=<%= books.thumbnail %>
                         <hr>
-                         <a class="btn btn-danger" href ="/delete/<%= books.id %>" aria-hidden="true">Delete this book</a>
-                        
                        
-                    </figure>
-                </div>
-             <% } %>
-            <% }); %>
-        </div>
-
-
-        <div class="row">
-        <% letter.forEach(function(letter){ %>
-            <% if (user.id === letter.recipient) { %> 
-                <div class="col-lg-12">
-                    <figure class="figure">
-                                              
-                        <p class= "search_preview"><%= letter.sender %></p>
-                         <p class= "search_preview"><%= letter.text %></p>
-                          <p class= "search_preview"><%= letter.sender_address %></p>                     
-                       
-                        <hr>
                          
                         
-                       
-                    </figure>
+                      
+                    
                 </div>
              <% } %>
             <% }); %>
         </div>
 
 
-
-   
+  
 
 
 </div>
@@ -83,6 +63,7 @@ letter<!DOCTYPE html>
 <div class="modal fade" id="editProfile" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
             <div class="modal-dialog" role="document">
                 <div class="modal-content">
+                
                     <form action="/updates" method="post">
                         <div class="modal-header">
                             <button type="button" class="close" data-dismiss="modal" aria-label="Close">
@@ -95,27 +76,14 @@ letter<!DOCTYPE html>
 
                                                         
                             <fieldset class="form-group">
-                                <label  for="inputContent">New Users name</label>
-                                <textarea id="inputContent" name="content" rows="1" cols="40" class="form-control" required=""><%= user.local.name %></textarea>
+                                <label  for="inputEmail">New Users name</label>                               
+                                <textarea id="name" name="name" rows="1" cols="40" class="form-control" required=""><%= user.local.name %></textarea>
                             </fieldset>
 
                             <fieldset class="form-group">
                                 <label  for="inputContent">New Users email</label>
-                                <textarea id="inputContent" name="content" rows="1" cols="40" class="form-control" required=""><%= user.local.email %></textarea>
+                                <textarea id="email" name="email" rows="1" cols="40" class="form-control" required=""><%= user.local.email %></textarea>
                             </fieldset>
-
-                            <fieldset class="form-group">
-                                <label  for="inputContent">Enter your old password</label>
-                                <textarea id="inputContent" name="content" rows="1" cols="40" class="form-control" required=""></textarea>
-                            </fieldset>
-
-                            <fieldset class="form-group">
-                                <label  for="inputContent">Enter new password</label>
-                                <textarea id="inputContent" name="content" rows="1" cols="40" class="form-control" required=""></textarea>
-                            </fieldset>
-                            
-
-
 
                         </div>
                         <div class="modal-footer">
@@ -131,10 +99,45 @@ letter<!DOCTYPE html>
 
 
 
+<div class="modal fade" id="editPassword" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <form action="/updatePassword" method="post">
+                        <div class="modal-header">
+                            <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                <span aria-hidden="true">&times;</span>
+                            </button>
+                            <h4 class="modal-title" id="myModalLabel">Edit your password</h4>
+                        </div>
+
+                        <div class="modal-body">                                                        
+                            
+                            <fieldset class="form-group">
+                                <label  for="currentpassword">Enter your old password</label>
+                                <input type="password" id="inputContent" name="currentPassword" rows="1" cols="40" class="form-control" required=""></input>
+                            </fieldset>
+
+                            <fieldset class="form-group">
+                                <label  for="newPassword">Enter new password</label>
+                                <input type="password" id="inputContent" name="newPassword" rows="1" cols="40" class="form-control" required=""></input>
+                            </fieldset>
+                            
+
+                            <fieldset class="form-group">
+                                <label  for="newPassword">Enter new password</label>
+                                <input type="password" id="inputContent" name="newPassword_check" rows="1" cols="40" class="form-control" required=""></input>
+                            </fieldset>
+
+                        </div>
+                        <div class="modal-footer">
+                            <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+                            <button type="submit" class="btn btn-primary">Save changes</button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
 
 
-
-
- 
     </body>
     </html>

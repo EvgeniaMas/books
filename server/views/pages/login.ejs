@@ -4,7 +4,7 @@
     <title><%= title %></title>
     <% include ../partials/stylesheet %>
 </head>
-<body>
+<body class="log_book_page">
     <% include ../partials/header %>
 
     <div class="container appName">
@@ -17,12 +17,12 @@
             </div>
 	    <% } %>
         <form class="form-signin" action="/login" method="post">
-            <h2 class="form-signin-heading">Welcome sign in</h2>
+            <h4 class="form-signin-heading">Welcome!</h4>
             <label for="inputEmail" class="sr-only">Email address</label>
             <input type="email" id="email" name="email" class="form-control" placeholder="Email address" required="">
             <label for="inputPassword" class="sr-only">Password</label>
             <input type="password" id="password" name="password" class="form-control" placeholder="Password" required="">
-            <button class="btn btn-lg btn-success btn-block" type="submit">Sign in</button>
+            <button class="btn green_button  btn-block" type="submit">Sign in</button>
             <br>
             <p>You are new here? <a href="/signup">Signup</a> right now.</p>
         </form>

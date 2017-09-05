@@ -22,7 +22,7 @@ var comments = require('./server/controllers/comments');
 // Import images controller
 var all_books = require('./server/controllers/all_books');
 var books = require ('./server/controllers/books');
-var message = require('./server/controllers/message');
+var letter = require('./server/controllers/letter');
 // ODM With Mongoose
 var mongoose = require('mongoose');
 // Modules to store session
@@ -48,6 +48,11 @@ mongoose.connection.on('error', function() {
 	console.error('MongoDB Connection Error. Make sure MongoDB is running.');
 });
 
+
+
+
+
+
 // Passport configuration
 require('./server/config/passport')(passport);
 
@@ -69,7 +74,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 // required for passport
 // secret for session
 app.use(session({
-    secret: 'sometextgohere',
+    secret: 'bookes',
     saveUninitialized: true,
     resave: true,
     //store session on MongoDB using express-session + connect mongo
@@ -120,17 +125,23 @@ app.get('/logout', function(req, res) {
     res.redirect('/');
 });
 
+
+app.post('/updates', auth.updates);
+app.post('/updatePassword', auth.updatePassword);
+app.post('/profile', auth.trade);
+
+
 // Setup routes for comments
 // app.get('/comments', comments.hasAuthorization, comments.list);
 // app.post('/comments', comments.hasAuthorization, comments.create);
 
-app.get('/message/:id', message.hasAuthorization, message.list);
+app.get('/letter?', letter.hasAuthorization, letter.list);
 
 
-// Setup routes for images
-app.post('/all_books', all_books.hasAuthorization, upload.single('all_books'), all_books.uploadImage);
+// Setup routes for all books
+
 app.get('/all_books', all_books.hasAuthorization, all_books.show);
-app.get('/like/:id', all_books.update);
+
 app.get('/delete/:id', auth.delete);
 app.get('/comments/:id', comments.delete);
 
