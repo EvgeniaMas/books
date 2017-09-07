@@ -25,6 +25,7 @@ body > .container {
 .appName {
   background: #e3f4f6;
   padding-bottom: 20px;
+  padding-top: 10px;
   border-radius: 20px; }
 
 .comments_padding {
@@ -175,7 +176,8 @@ nav a {
 
 .green_button {
   position: relative;
-  display: inline-block;
+  display: block;
+  max-width: 120px;
   font-family: Arial,Helvetica,FreeSans,"Liberation Sans","Nimbus Sans L",sans-serif;
   font-size: 1.2em;
   font-weight: 700;
@@ -199,9 +201,10 @@ nav a {
 
 .red_button {
   position: relative;
-  display: inline-block;
+  display: block;
+  max-width: 120px;
   font-family: Arial,Helvetica,FreeSans,"Liberation Sans","Nimbus Sans L",sans-serif;
-  font-size: 1.5em;
+  font-size: 1em;
   font-weight: 700;
   color: whitesmoke;
   text-shadow: 0 -1px rgba(0, 0, 0, 0.1);
@@ -228,5 +231,29 @@ nav a {
   cursor: pointer;
   -webkit-transform: scale(1.1, 1.1);
   transform: scale(1.1, 1.1); }
+
+.hidden_content {
+  display: none; }
+
+div.books_gallery {
+  height: 250px !important;
+  margin-bottom: 30px; }
+
+.profile_green_button {
+  display: inline-block;
+  margin: 10px;
+  max-width: 200px; }
+
+div.books_gallery_profile {
+  height: 350px !important;
+  margin-bottom: 30px; }
+
+.profile_section {
+  font-size: 16px;
+  font-weight: bold;
+  text-transform: uppercase; }
+
+.books_covers {
+  display: block; }
 
 /*# sourceMappingURL=style.css.map */

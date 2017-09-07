@@ -21,18 +21,40 @@ var bookSchema = mongoose.Schema({
         
     },
 
+    index:  {
+        type: String
+        
+    },
+
     
     description: 
     {
         type: String
     },
 
-    trade: {
-        sender: String,
-        letter_text: String,
-        recipient: String
+    sender: 
+    {
+        type: String
 
     },
+
+    senderId: 
+
+    {
+        type: String
+
+    },
+
+    letter_text: 
+    {
+        type: String
+    },
+
+    recipient: 
+    {
+        type: String
+    },
+  
 
     user: {
         type: Schema.ObjectId,

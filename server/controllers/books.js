@@ -63,23 +63,18 @@ Books.findByIdAndRemove(req.params.bookid, function(err){
 exports.lookFor = function (req, res) {
 var allbooks = [];
  googleBooks.search(req.body.title, function(error, results) {
-    if ( ! error ) {
-       
+    if ( ! error ) {       
     res.render('books', { user: req.user, 
     search: req.body.title,
-    results: results[0]
-                    
-    });             
+    results: results[0]                    
+    });           
 
-            // allbooks.push(results);
-            // console.log("here:" + allbooks);            
-            } 
+    } 
 
     else {
         console.log(error);
         }
-    }); 
-           
+    });           
 };
 
 
@@ -87,22 +82,22 @@ exports.save = function (req, res) {
    var books = new Books(req.body);
         // Set the image file name
         books.title = req.body.title;
-        console.log('title is' + books.title);
         books.author = req.body.author;
         books.description = req.body.description;
         books.thumbnail = req.body.thumbnail;
+        books.index = req.body.index;
         // Set current user (id)
-        books.user = req.user;
+        books.user = req.user;         
         // save the data receivedbook
         books.save(function(error) {
-            if (error) {
-                return res.status(400).send({
-                    message: error
-                });
-            }
-        });
-        res.redirect('/');
-    
+         if (error) {
+            throw err;            
+        }
+        else {
+            res.render('/profile'); 
+        }
+    })
+
 };
 
 
@@ -114,9 +109,7 @@ Books.findByIdAndRemove(req.params.bookid, function(err){
         });
     
 };
-   
-
-
+  
 
 // Books authorization middleware
 exports.hasAuthorization = function(req, res, next) {

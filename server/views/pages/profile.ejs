@@ -13,46 +13,80 @@ letter<!DOCTYPE html>
 
             <div class="card text-xs-center appName">
                 <br>
-                
+                <% if (message) { %>
+            <div class="alert alert-warning alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong>Ohps!</strong> <%= message %>.
+            </div>
+            <% } %>
                 <div class="card-block">
                    
                     <p class="card-text">
                         <strong>Name</strong>: <%= user.local.name %><br>
                         <strong>Email</strong>: <%= user.local.email %>
                     </p>
-                    <a href="/logout" class="btn green_button ">Logout</a>
-                     <button class="btn green_button "  data-toggle="modal" data-target="#editProfile">Update your personal information</button>
-                     <button class="btn green_button "  data-toggle="modal" data-target="#editPassword">Update your password</button>
+                    <a href="/logout" class="btn green_button profile_green_button">Logout</a>
+                     <button class="btn green_button profile_green_button"  data-toggle="modal" data-target="#editProfile">Update personal info</button>
+                     <button class="btn green_button profile_green_button"  data-toggle="modal" data-target="#editPassword">Update password</button>
                 </div>
             </div>
         </div>
 
-       
+
     <div class="row">
 
             <% books.forEach(function(books){ %>
-             <% if (user.id === books.user.id) { %> 
-                <div class="col-lg-3">
-                <a class="btn red_button button_margin" href ="/delete/<%= books.id %>" aria-hidden="true">Delete</a>
-                    <figure class="figure">                                              
-                        <p class= "search_preview"><%= books.author %></p>
-                        <p class= "search_preview"><%= books.title %></p>
-                      </figure>  
-                        <img src=<%= books.thumbnail %>
+             <% if (user.id === books.recipient) { %> 
+                <div class="col-lg-12">
+                   <p class= "profile_section text-center"> You have a request for trade about book "<%= books.title %>" </p>
+                    <figure class="figure col-lg6">                                              
+                        <p class= "search_preview"><%= books.sender %></p>
+                        <p class= "search_preview"><%= books.letter_text %></p>
+                      </figure>
+                        <a class="btn red_button button_margin" href ="/decline/<%= books.id %>" aria-hidden="true">Decline</a>
                         <hr>
-                       
-                         
-                        
-                      
-                    
                 </div>
+
              <% } %>
             <% }); %>
         </div>
 
 
-  
+    <div class="row">
 
+            <% books.forEach(function(books){ %>
+             <% if (user.id === books.senderId) { %> 
+                <div class="col-lg-12">
+                   <p class= "profile_section text-center"> You have sent a trade proposal about the book "<%= books.title %>"" </p>
+                   <a class="btn red_button button_margin" href ="/cancel/<%= books.id %>" aria-hidden="true">Cancel</a>
+                 </div>
+             <% } %>
+            <% }); %>
+        
+   </div>
+
+         <hr>
+
+       
+    <div class="row ">
+        <p class= "profile_section text-center"> Your books </p>
+            <% books.forEach(function(books){ %>
+             <% if (user.id === books.user.id) { %> 
+             
+                <div class="col-lg-3 books_gallery_profile">
+                <a class="btn red_button button_margin" href ="/delete/<%= books.id %>" aria-hidden="true">Delete</a>
+                    <figure class="figure">                                              
+                        <p class= "search_preview"><%= books.author %></p>
+                        <p class= "search_preview"><%= books.title %></p>
+                      </figure>  
+                        <img class="books_covers" src=<%= books.thumbnail %>
+                        <hr>
+                </div>
+             <% } %>
+            <% }); %>
+        </div>
 
 </div>
         <% include ../partials/footer %>
@@ -139,5 +173,5 @@ letter<!DOCTYPE html>
         </div>
 
 
-    </body>
-    </html>
+</body>
+</html>

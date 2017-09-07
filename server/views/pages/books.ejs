@@ -13,6 +13,15 @@
 <% if (search) { %>
 
 <div class="col-lg-12">
+  
+            <div id= "info" class="hidden_content alert alert-warning alert-dismissible fade in" role="alert">
+                <button type="button" class="close" data-dismiss="alert" aria-label="Close">
+                    <span aria-hidden="true">&times;</span>
+                </button>
+                <strong id="book_added"></strong>
+            </div>
+    
+
 	<div class="row">
 	<div class="col-lg-5">
 
@@ -21,19 +30,20 @@
  
 
 <img id ="book_picture" class= "search_preview book_cover" src=<%= results.thumbnail %>>
-
+<button class= "btn green_button profile_green_button" onclick="addBook()">Add this book! </button>
 </div>
 
 
 
 <div class="col-lg-7">
 <p id ="book_desc" class="search_preview"> <%= results.description %> </p>
+<p id ="index" class="search_preview hidden_content> <%= results.id %>" </p>
 </div>
 </div>
 </div>
 <div class="col-lg-12">
-<button class= "btn green_button" onclick="addBook()">Add this book! </button>
-<p class= "search_preview more_search"> Didn't find the book? <br> Try to make another search! </p>
+
+<p class= "search_preview more_search"> Didn't find the book? <br> Try to make another <a href="/books">search</a> </p>
 	
 </div>
 
@@ -45,7 +55,7 @@
 <form action="/books"  class= "search_preview" method="post">
     <input class="search_book" type="text" name="title" required>
    
-     <input class="btn green_button " type="submit" value="Search" id="submit" />
+     <input class="btn green_button profile_green_button" type="submit" value="Search" id="submit" />
 </form>
  
 <% } %>
@@ -65,14 +75,16 @@
   var author = document.getElementById('book_author').innerHTML;  
   var thumbnail = document.getElementById('book_picture').src;
   var description = document.getElementById('book_desc').innerHTML;
+  var index = document.getElementById('index').innerHTML;
  	var body = 'title=' + encodeURIComponent(title) + '&author='+ encodeURIComponent(author) +
-  '&thumbnail=' + encodeURIComponent(thumbnail) + '&description=' + encodeURIComponent(description);
+  '&thumbnail=' + encodeURIComponent(thumbnail) + '&description=' + encodeURIComponent(description) +
+  '&index=' + encodeURIComponent(index);
   
     // 1. Создаём новый объект XMLHttpRequest
     var xhr = new XMLHttpRequest();
 
     // 2. Конфигурируем его: POST-запрос на URL 
-    xhr.open('POST', '/books/add', true);
+    xhr.open('POST', '/addbook', true);
     xhr.setRequestHeader('Content-Type', 'application/x-www-form-urlencoded');
     // 3. Отсылаем запрос
     xhr.send(body);
@@ -80,10 +92,14 @@
     // 4. Если код ответа сервера не 200, то это ошибка
     if (xhr.status != 200) {
       // обработать ошибку
-      console.log( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+       console.log( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+     
     } else {
       // вывести результат
       console.log( xhr.responseText ); // responseText -- текст ответа.
+      document.getElementById('info').remove('hidden_content');
+      document.getElementById('book_added').innerHTML = "This book is added to your collection!";
+      
     }    
 }
 

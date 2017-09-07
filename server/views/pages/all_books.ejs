@@ -14,27 +14,21 @@
         </div>
        
  <hr>
-        <div class="row">
+        <div class="row ">
         
             <% books.forEach(function(books){ %>
-                <div class="col-lg-2">
-                <a class="green_button button_margin" href ="/letter?id=<%=books.user.id%>" aria-hidden="true">Buy!</a>
-                
+                <div class="col-lg-2 col-sm-4 col-xs-6 books_gallery">
+                <a class="green_button button_margin" href ="/letter?id=<%=books.user.id%>&bookId=<%=books.id%>" aria-hidden="true">Buy!</a>               
                 <figure class="figure">
                     <img class= "search_preview" src=<%= books.thumbnail %>  
-                </figure>                           
+                </figure>                          
                    
-                                
                 </div>
             <% }); %>
             </div>
         
        
  </div>
-
-
- 
-
 
         <% include ../partials/footer %>
         <% include ../partials/javascript %>

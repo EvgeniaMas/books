@@ -6,47 +6,57 @@ var User = require ('../models/users');
 var Books = require ('../models/books')
 // List Letter
 exports.list = function(req, res) {
-	     var id = req.query.id;
-         User.findById(id, function (err, user) {
+	     var id = req.query.id; 
+         console.log(id);
+         var bookId = req.query.bookId;
+         User.findById(id).populate('books').exec(function(error, user, books){
+        
+
+         // User.findById(id, function (err, user) {
          var recipient = user.local.name;
-         console.log(recipient);
-         
+         // console.log(recipient);
+         var owner = user.id;
+         console.log(owner);
 
         res.render('letter', {
-            title: 'Messages',
+            title: 'New trade',
             recipient: recipient,
-            user : req.user           
+            books: books,
+            recipientId: id, 
+            user : req.user, 
+            owner: owner,
+            bookId: bookId           
         });
     });    
 };
 
 
-// Create Letter
-exports.create = function(req, res) {
-	// create a new instance of the Comments model with request body
-    var letter = new Letter(req.body);
-    // Set current user (id)
-    letter.user = req.user;
-    // save the data received
-    letter.save(function(error) {
-        if (error) {
-            return res.send(400, {
-                message: error
-            });
-        }
-        // Redirect to comments
-        res.redirect('/letter');
-    });
-};
+// // Create Letter
+// exports.create = function(req, res) {
+// 	// create a new instance of the Comments model with request body
+//     var letter = new Letter(req.body);
+//     // Set current user (id)
+//     letter.user = req.user;
+//     // save the data received
+//     letter.save(function(error) {
+//         if (error) {
+//             return res.send(400, {
+//                 message: error
+//             });
+//         }
+//         // Redirect to comments
+//         res.redirect('/letter');
+//     });
+// };
 
-exports.delete = function(req, res) {
+// exports.delete = function(req, res) {
    
-Letter.findByIdAndRemove(req.params.id, function(err){
-            if (err) throw err;
-            res.redirect('/letter');
-        });
+// Letter.findByIdAndRemove(req.params.id, function(err){
+//             if (err) throw err;
+//             res.redirect('/letter');
+//         });
     
-};
+// };
 
 
 

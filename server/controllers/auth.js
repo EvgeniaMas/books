@@ -30,7 +30,7 @@ Books.find().sort('-created').populate('user').exec(function(error, books){
     res.render('profile', { title: 'Your profile', 
         books: books,         
         user : req.user, 
-        mistake: "",
+        message: "",
         avatar: gravatar.url(req.user.email ,  {s: '100', r: 'x', d: 'identicon'}, true) });       
        
     })    
@@ -41,8 +41,7 @@ exports.delete = function(req, res) {
 Books.findByIdAndRemove(req.params.id, function(err){
             if (err) throw err;
             res.redirect('/profile');
-        });
-    
+        });    
 };
 
 
@@ -52,8 +51,6 @@ exports.hasAuthorization = function(req, res, next) {
     return next();
     res.redirect('/login');
 };
-
-
 
 
 // Logout function
@@ -88,19 +85,24 @@ exports.updates = function(req, res) {
 
 exports.updatePassword = function(req, res, err) { 
     var name = req.user.local.name;
-    var email = req.user.local.email;
-    console.log(email);
+    var email = req.user.local.email;    
     var currentPassword = req.user.local.password;  
     var oldPassword = req.body.currentPassword;
     var newPassword = req.body.newPassword;
     var newPassword_check = req.body.newPassword_check;  
     var id = req.user.id;   
-     if (oldPassword != currentPassword) {
-        throw err;
-     }
-     else if (newPassword != newPassword_check) {
-        throw err;
-     }
+    if (oldPassword != currentPassword) {
+
+    Books.find().sort('-created').populate('user').exec(function(error, books){
+             res.render('profile', { title: 'Profile', user : req.user, books: books, message: 'Your current password is different'});
+    })
+          
+    }
+     else if (newPassword != newPassword_check){
+       Books.find().sort('-created').populate('user').exec(function(error, books){
+             res.render('profile', { title: 'Profile', user : req.user, books: books, message: 'Your new password is different when inputed twice'});
+    })    
+    }      
 
      else { 
 
@@ -110,18 +112,54 @@ exports.updatePassword = function(req, res, err) {
     user.save(); // works
     // console.log("Обновленный объект", user);
     res.redirect('/profile');
-})
+    })
 
     }
 };
 
 
 exports.trade = function(req, res) { 
-
-    console.log("good");
-
-
+    var newSender = req.body.sender;
+    var newSenderId = req.body.newSenderId;
+    console.log(newSenderId);    
+    var newletter_text = req.body.letter_text;
+    var recipient = req.body.recipient;
+    var id = req.body.bookId;
+    var recipientId = req.body.recipientId;
+    console.log (req.user.id);    
+    Books.findByIdAndUpdate(id, {$set: { senderId : newSenderId, sender: newSender, 
+        letter_text: newletter_text, recipient:recipientId }} , function(err){
+        if (err) throw err;       
+        res.redirect('/all_books');
+    });   
 };
+
+
+
+exports.decline = function(req, res) { 
+        var id = req.params.id;
+    Books.findByIdAndUpdate(id, {$set: { senderId : "", sender: "", 
+        letter_text: "", recipient:"" }} , function(err){
+        if (err) throw err;       
+        res.redirect('/profile');
+    });
+
+   
+};
+
+
+exports.cancel = function(req, res) { 
+        var id = req.params.id;
+    Books.findByIdAndUpdate(id, {$set: { senderId : "", sender: "", 
+        letter_text: "", recipient:"" }} , function(err){
+        if (err) throw err;       
+        res.redirect('/profile');
+    });   
+};
+
+
+
+
 
 
 

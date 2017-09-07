@@ -128,7 +128,7 @@ app.get('/logout', function(req, res) {
 
 app.post('/updates', auth.updates);
 app.post('/updatePassword', auth.updatePassword);
-app.post('/profile', auth.trade);
+app.post('/trade', auth.trade);
 
 
 // Setup routes for comments
@@ -143,13 +143,16 @@ app.get('/letter?', letter.hasAuthorization, letter.list);
 app.get('/all_books', all_books.hasAuthorization, all_books.show);
 
 app.get('/delete/:id', auth.delete);
+app.get('/cancel/:id', auth.cancel);
+app.get('/decline/:id', auth.decline);
+
 app.get('/comments/:id', comments.delete);
 
 app.get('/books',  books.hasAuthorization, books.list, books.create, books.delete);
 
 
-app.post('/books',  books.hasAuthorization, books.lookFor, books.save);
-app.post('/books/add',  books.hasAuthorization, books.save);
+app.post('/books',  books.hasAuthorization, books.lookFor);
+app.post('/addbook',  books.hasAuthorization, books.save);
 
 // app.get('/books',  books.hasAuthorization, books.save);
 

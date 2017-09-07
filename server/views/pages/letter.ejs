@@ -7,8 +7,23 @@
 <body class="letter_book_page">
     <% include ../partials/header %>
     <div class="container  comments_padding ">
+    
+                 
+                 <% if (user.id == owner) { %>
+            <div class="col-lg-12 appName">
+            <div class="alert alert-warning alert-dismissible fade in" role="alert">                
+                    
+                <strong>You can't trade for your own book! Try to find other one to buy! </strong>
+
+            </div>
+
+            <p class= "search_preview more_search"> Go to books  <a href="/all_books">gallery</a> </p>
+           
+            </div>
+
+           <% } else { %>
+          
     <div class="col-lg-6 appName">
-       
                     <form action="/trade" method="post">
                         <div class="modal-header">
                             
@@ -27,13 +42,21 @@
                                 <textarea id="inputContent" name="letter_text" rows="8" cols="30" class="form-control" placeholder="" required="">To bookowner - <%= recipient %></textarea>
                             </fieldset>
 
+                            <textarea class="hidden_content" name="bookId" rows="1" cols="1" class="form-control" placeholder="" required=""><%=bookId%></textarea>
+                             <textarea class="hidden_content" name="recipientId" rows="1" cols="1" class="form-control" placeholder="" required=""><%= recipientId%></textarea>
+                              <textarea class="hidden_content" name="newSenderId" rows="1" cols="1" class="form-control" placeholder="" required=""><%= user.id%></textarea>
+
                         </div>
+
+                       
                         <div class="modal-footer">
                             
                             <button type="submit" class="btn green_button">Send</button>
                         </div>
                     </form>
-            </div>            
+           
+        </div>
+            <% } %>           
         </div>
 
 
