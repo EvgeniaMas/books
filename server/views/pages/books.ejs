@@ -14,11 +14,11 @@
 
 <div class="col-lg-12">
   
-            <div id= "info" class="hidden_content alert alert-warning alert-dismissible fade in" role="alert">
+            <div id= "info" class="alert alert-warning alert-dismissible fade in" role="alert">
                 <button type="button" class="close" data-dismiss="alert" aria-label="Close">
                     <span aria-hidden="true">&times;</span>
                 </button>
-                <strong id="book_added"></strong>
+                <strong id="book_added">New book Found!</strong>
             </div>
     
 
@@ -90,14 +90,13 @@
     xhr.send(body);
 
     // 4. Если код ответа сервера не 200, то это ошибка
-    if (xhr.status != 200) {
+    if (xhr.status == 200) {
       // обработать ошибку
-       console.log( xhr.status + ': ' + xhr.statusText ); // пример вывода: 404: Not Found
+       console.log( "xhr.status + ': ' + xhr.statusText" ); // пример вывода: 404: Not Found
      
     } else {
       // вывести результат
-      console.log( xhr.responseText ); // responseText -- текст ответа.
-      document.getElementById('info').remove('hidden_content');
+           
       document.getElementById('book_added').innerHTML = "This book is added to your collection!";
       
     }    

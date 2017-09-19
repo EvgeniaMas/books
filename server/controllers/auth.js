@@ -26,7 +26,13 @@ exports.signup = function(req, res) {
 exports.profile = function(req, res) {
    
 Books.find().sort('-created').populate('user').exec(function(error, books){
-            
+            if (error) {
+            return res.status(400).send({
+                message: error
+
+            });
+        }
+
     res.render('profile', { title: 'Your profile', 
         books: books,         
         user : req.user, 
@@ -68,7 +74,8 @@ exports.isLoggedIn = function(req, res, next) {
 
 
 
-exports.updates = function(req, res) {   
+exports.updates = function(req, res, error) { 
+
     var name = req.body.name;
     var email = req.body.email; 
     var password = req.user.local.password;   
@@ -80,10 +87,13 @@ exports.updates = function(req, res) {
      // console.log("Обновленный объект", user);
     res.redirect('/profile');
 })
+
+
 };
 
 
-exports.updatePassword = function(req, res, err) { 
+exports.updatePassword = function(req, res, error) { 
+    
     var name = req.user.local.name;
     var email = req.user.local.email;    
     var currentPassword = req.user.local.password;  
@@ -118,7 +128,8 @@ exports.updatePassword = function(req, res, err) {
 };
 
 
-exports.trade = function(req, res) { 
+exports.trade = function(req, res, error) { 
+    
     var newSender = req.body.sender;
     var newSenderId = req.body.newSenderId;
     console.log(newSenderId);    
